@@ -40,8 +40,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
                    language-pack-ja \
                    sudo \
                    jwm \
-                   mlterm \
-                   mlterm-im-fcitx \
+                   lxterminal \
                    alsa-utils \
                    pulseaudio \
                    pulseaudio-utils \
