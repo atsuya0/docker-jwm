@@ -89,15 +89,19 @@ RUN curl -O https://dl.google.com/linux/direct/google-chrome-stable_current_amd6
       && rm google-chrome-stable_current_amd64.deb
 
 # ターミナル、bash、ウィンドウマネージャの設定
-RUN mkdir ./.mlterm \
-  && curl https://raw.githubusercontent.com/atsuya0/dotfiles/master/mlterm/main -o ./.mlterm/main \
-  && curl https://raw.githubusercontent.com/atsuya0/dotfiles/master/etc/bashrc -o ./.bashrc \
-  && curl https://raw.githubusercontent.com/atsuya0/dotfiles/master/etc/jwmrc -o ./.jwmrc
+COPY ./lxterminal.conf  ./.config/lxterminal/lxterminal.conf
+COPY ./bashrc  ./.bashrc
+COPY ./jwmrc  ./.jwmrc
 
 # cuiファイルマネージャの設定
 RUN ranger -r ./.config/ranger --copy-config=all
 RUN sed -i 's/\(set preview_images \)false/\1true/' ./.config/ranger/rc.conf
 RUN sed -i 's/###video/video/;s/.*\(ffmpegthumbnailer.*\)/\1/' ./.config/ranger/scope.sh
+
+RUN mkdir -p ./.local/share/fonts && \
+    curl -L https://github.com/tonsky/FiraCode/raw/master/distr/ttf/{FiraCode-Regular.ttf} -o ./.local/share/fonts/#1 && \
+    chown -R ${DOCKER_USER} ./.local && \
+    fc-cache
 
 # 使用するかもしれないディレクトリの生成
 RUN mkdir mnt Downloads
