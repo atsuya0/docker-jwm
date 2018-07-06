@@ -7,30 +7,6 @@ ENV DISPLAY=:1
 RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@' /etc/apt/sources.list
 
 # 諸々インストール
-#   x11-xserver-utils : X window system (GUI)
-#   xinit : X window system (GUI)
-#   tzdata : TimeZone
-#   language-pack-ja-base : 日本語
-#   language-pack-ja : 日本語
-#   sudo :
-#   jwm : 軽量なスタック型window manger
-#   mlterm : ターミナル
-#   mlterm-im-fcitx : mltermでfcitxを使用する
-#   alsa-utils : 音
-#   pulseaudio : 音
-#   pulseaudio-utils : 音
-#   fonts-ipafont-gothic : フォント
-#   dbus-x11 : Xクライアントの通信。日本語入力するのに必要。
-#   fcitx-mozc : 日本語入力
-#   fcitx-imlist fcitxの設定をコマンドで行うために必要
-#   vim-gtk3 : エディタ
-#   curl : ファイルをダウンロードしたい
-#   feh : 画像viewer
-#   vlc : 動画player
-#   mupdf : pdf viewr
-#   ranger : cuiファイルマネージャ
-#   w3m-img : ターミナル上で画像を表示
-#   ffmpegthumbnailer : 動画のサムネイル
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt update \
     && apt install -y x11-xserver-utils \
