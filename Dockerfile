@@ -25,6 +25,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
                    fcitx-mozc \
                    fcitx-imlist \
                    vim-gtk3 \
+                   libcurl4 \
+                   epiphany-browser \
                    curl \
                    feh \
                    vlc \
@@ -32,6 +34,11 @@ RUN export DEBIAN_FRONTEND=noninteractive \
                    ranger \
                    w3m-img \
                    ffmpegthumbnailer
+
+# google-chrome
+RUN curl -O https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+      && apt install -y ./google-chrome-stable_current_amd64.deb \
+      && rm google-chrome-stable_current_amd64.deb
 # 音
 ENV PULSE_SERVER=unix:/tmp/pulse/native \
     PULSE_COOKIE=/tmp/pulse/cookie
@@ -58,25 +65,15 @@ RUN useradd -m --uid ${DOCKER_UID} --groups sudo --shell /bin/bash ${DOCKER_USER
 
 WORKDIR /home/${DOCKER_USER}
 
-# google-chrome
-RUN curl -O https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-      && apt install -y ./google-chrome-stable_current_amd64.deb \
-      && rm google-chrome-stable_current_amd64.deb
-
-# ターミナル、bash、ウィンドウマネージャの設定
-COPY ./lxterminal.conf  ./.config/lxterminal/lxterminal.conf
-COPY ./bashrc  ./.bashrc
-COPY ./jwmrc  ./.jwmrc
-
 # cuiファイルマネージャの設定
 RUN ranger -r ./.config/ranger --copy-config=all
 RUN sed -i 's/\(set preview_images \)false/\1true/' ./.config/ranger/rc.conf
 RUN sed -i 's/###video/video/;s/.*\(ffmpegthumbnailer.*\)/\1/' ./.config/ranger/scope.sh
 
-RUN mkdir -p ./.local/share/fonts && \
-    curl -L https://github.com/tonsky/FiraCode/raw/master/distr/ttf/{FiraCode-Regular.ttf} -o ./.local/share/fonts/#1 && \
-    chown -R ${DOCKER_USER} ./.local && \
-    fc-cache
+# ターミナル、bash、ウィンドウマネージャの設定
+COPY ./config/lxterminal.conf  ./.config/lxterminal/lxterminal.conf
+COPY ./config/bashrc  ./.bashrc
+COPY ./config/jwmrc  ./.jwmrc
 
 # 使用するかもしれないディレクトリの生成
 RUN mkdir mnt Downloads
