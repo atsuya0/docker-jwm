@@ -19,7 +19,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
                    lxterminal \
                    alsa-utils \
                    pulseaudio \
-                   pulseaudio-utils \
                    fonts-ipafont-gothic \
                    dbus-x11 \
                    fcitx-mozc \
@@ -28,12 +27,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
                    libcurl4 \
                    epiphany-browser \
                    curl \
-                   feh \
-                   vlc \
-                   mupdf \
-                   ranger \
-                   w3m-img \
-                   ffmpegthumbnailer
+                   feh
 
 # google-chrome
 RUN curl -O https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
@@ -65,18 +59,10 @@ RUN useradd -m --uid ${DOCKER_UID} --groups sudo --shell /bin/bash ${DOCKER_USER
 
 WORKDIR /home/${DOCKER_USER}
 
-# cuiファイルマネージャの設定
-RUN ranger -r ./.config/ranger --copy-config=all
-RUN sed -i 's/\(set preview_images \)false/\1true/' ./.config/ranger/rc.conf
-RUN sed -i 's/###video/video/;s/.*\(ffmpegthumbnailer.*\)/\1/' ./.config/ranger/scope.sh
-
 # ターミナル、bash、ウィンドウマネージャの設定
 COPY ./config/lxterminal.conf  ./.config/lxterminal/lxterminal.conf
 COPY ./config/bashrc  ./.bashrc
 COPY ./config/jwmrc  ./.jwmrc
-
-# 使用するかもしれないディレクトリの生成
-RUN mkdir mnt Downloads
 
 # 所有者をrootから変更する
 RUN chown -R ${DOCKER_USER} ./
