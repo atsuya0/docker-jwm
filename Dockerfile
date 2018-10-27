@@ -4,7 +4,8 @@ FROM ubuntu:18.04
 ENV DISPLAY=:1
 
 # ミラーの変更
-RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@' /etc/apt/sources.list
+RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@' \
+      /etc/apt/sources.list
 
 # 諸々インストール
 RUN export DEBIAN_FRONTEND=noninteractive \
@@ -55,7 +56,8 @@ ENV GTK_IM_MODULE=fcitx \
 ARG DOCKER_UID=1000
 ARG DOCKER_USER=docker
 ARG DOCKER_PASSWORD=docker
-RUN useradd -m --uid ${DOCKER_UID} --groups sudo --shell /bin/bash ${DOCKER_USER} && echo ${DOCKER_USER}:${DOCKER_PASSWORD} | chpasswd
+RUN useradd -m --uid ${DOCKER_UID} --groups sudo --shell /bin/bash ${DOCKER_USER} \
+      && echo ${DOCKER_USER}:${DOCKER_PASSWORD} | chpasswd
 
 WORKDIR /home/${DOCKER_USER}
 
