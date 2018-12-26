@@ -62,10 +62,17 @@ RUN useradd -m \
 
 WORKDIR /home/${DOCKER_USER}
 
-# ターミナル、bash、ウィンドウマネージャの設定
-COPY ./config/lxterminal.conf  ./.config/lxterminal/lxterminal.conf
-COPY ./config/bashrc  ./.bashrc
-COPY ./config/jwmrc  ./.jwmrc
+# jwm(window manager), lxterminal(terminal), bashの設定
+RUN curl -L \
+  https://raw.githubusercontent.com/tayusa/dotfiles/master/etc/jwmrc \
+  -o ./.jwmrc \
+  && mkdir -p ./.config/lxterminal \
+  && curl -L \
+  https://raw.githubusercontent.com/tayusa/dotfiles/master/terminal/lxterminal/lxterminal.conf \
+  -o ./.config/lxterminal/lxterminal.conf \
+  && curl -L \
+  https://raw.githubusercontent.com/tayusa/dotfiles/master/etc/bashrc \
+  -o ./.bashrc
 
 RUN chown -R ${DOCKER_USER} ./
 
