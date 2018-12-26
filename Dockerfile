@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:latest
 
 # 使っていない値を指定する
 ENV DISPLAY=:1
@@ -7,28 +7,27 @@ ENV DISPLAY=:1
 RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@' \
       /etc/apt/sources.list
 
-# 諸々インストール
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt update \
     && apt install -y x11-xserver-utils \
-                   xinit \
-                   tzdata \
-                   language-pack-ja-base \
-                   language-pack-ja \
-                   sudo \
-                   jwm \
-                   lxterminal \
-                   alsa-utils \
-                   pulseaudio \
-                   fonts-ipafont-gothic \
-                   dbus-x11 \
-                   fcitx-mozc \
-                   fcitx-imlist \
-                   vim-gtk3 \
-                   libcurl4 \
-                   epiphany-browser \
-                   curl \
-                   feh
+                      xinit \
+                      tzdata \
+                      language-pack-ja-base \
+                      language-pack-ja \
+                      sudo \
+                      jwm \
+                      lxterminal \
+                      alsa-utils \
+                      pulseaudio \
+                      fonts-ipafont-gothic \
+                      dbus-x11 \
+                      fcitx-mozc \
+                      fcitx-imlist \
+                      vim-gtk3 \
+                      libcurl4 \
+                      epiphany-browser \
+                      curl \
+                      feh
 
 # google-chrome
 RUN curl -O https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
@@ -52,12 +51,14 @@ ENV GTK_IM_MODULE=fcitx \
     DefalutIMModule=fcitx
 
 # docker内で使うユーザを作成する。
-# ホストと同じUIDにする。ホストのpulseaudioのcookieを触るときに、permision deniedにならない。
+# ホストと同じUIDにする。
+# ホストのpulseaudioのcookieを触るときに、permision deniedにならない。
 ARG DOCKER_UID=1000
 ARG DOCKER_USER=docker
 ARG DOCKER_PASSWORD=docker
-RUN useradd -m --uid ${DOCKER_UID} --groups sudo --shell /bin/bash ${DOCKER_USER} \
-      && echo ${DOCKER_USER}:${DOCKER_PASSWORD} | chpasswd
+RUN useradd -m \
+  --uid ${DOCKER_UID} --groups sudo --shell /bin/bash ${DOCKER_USER} \
+  && echo ${DOCKER_USER}:${DOCKER_PASSWORD} | chpasswd
 
 WORKDIR /home/${DOCKER_USER}
 
@@ -66,7 +67,6 @@ COPY ./config/lxterminal.conf  ./.config/lxterminal/lxterminal.conf
 COPY ./config/bashrc  ./.bashrc
 COPY ./config/jwmrc  ./.jwmrc
 
-# 所有者をrootから変更する
 RUN chown -R ${DOCKER_USER} ./
 
 USER ${DOCKER_USER}
