@@ -1,0 +1,22 @@
+[Profile]
+# 全角文字を使用
+# 可能な値:
+# True False
+#FullWidth=False
+# 全角の句読点を使用
+# 可能な値:
+# True False
+#WidePunc=True
+# 入力後にフレーズを表示
+# 可能な値:
+# True False
+#UseRemind=False
+# 現在の入力メソッド名
+IMName=mozc
+# 現在使える入力メソッドのリスト
+EnabledIMList=fcitx-keyboard-jp:True,mozc:True
+# クライアントのウィンドウにプレエディットを表示
+# 可能な値:
+# True False
+#PreeditStringInClientWindow=True
+

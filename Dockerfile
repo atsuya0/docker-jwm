@@ -76,6 +76,9 @@ RUN curl -L \
 
 RUN chown -R ${DOCKER_USER} ./
 
+COPY ./fcitx/config ./.config/fcitx/
+COPY ./fcitx/profile ./.config/fcitx/
+
 USER ${DOCKER_USER}
 
 CMD jwm
