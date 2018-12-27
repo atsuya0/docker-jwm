@@ -66,7 +66,10 @@ COPY ./config/jwmrc ./.jwmrc
 COPY ./config/lxterminal.conf ./.config/lxterminal/lxterminal.conf
 COPY ./config/bashrc ./.bashrc
 COPY ./fcitx/config ./.config/fcitx/
-COPY ./fcitx/profile ./.config/fcitx/
+RUN echo '[Profile]\n \
+          IMName=mozc\n \
+          EnabledIMList=fcitx-keyboard-jp:True,mozc:True\n' \
+          > ./.config/fcitx/profile
 
 RUN chown -R ${DOCKER_USER} ./
 
