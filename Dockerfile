@@ -65,11 +65,10 @@ WORKDIR /home/${DOCKER_USER}
 COPY ./config/jwmrc ./.jwmrc
 COPY ./config/lxterminal.conf ./.config/lxterminal/lxterminal.conf
 COPY ./config/bashrc ./.bashrc
-
-RUN chown -R ${DOCKER_USER} ./
-
 COPY ./fcitx/config ./.config/fcitx/
 COPY ./fcitx/profile ./.config/fcitx/
+
+RUN chown -R ${DOCKER_USER} ./
 
 USER ${DOCKER_USER}
 
