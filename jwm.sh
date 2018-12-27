@@ -8,7 +8,7 @@ function jwm() {
     || Xephyr -wr -resizeable :1 &> /dev/null &
 
   docker run $@ \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v '/tmp/.X11-unix:/tmp/.X11-unix' \
     -v "/run/user/${UID}/pulse/native:/tmp/pulse/native" \
     -v "${HOME}/.config/pulse/cookie:/tmp/pulse/cookie" \
     -it --rm "${USER}/ubuntu-jwm" &> /dev/null
