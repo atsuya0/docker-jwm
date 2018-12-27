@@ -22,7 +22,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
                       fonts-ipafont-gothic \
                       dbus-x11 \
                       fcitx-mozc \
-                      fcitx-imlist \
                       vim-gtk3 \
                       libcurl4 \
                       epiphany-browser \
