@@ -218,7 +218,5 @@
 
     <StartupCommand>
       fcitx-autostart
-      fcitx-imlist -e fcitx-keyboard-jp
-      fcitx-imlist -s fcitx-keyboard-jp,mozc,fcitx-keyboard-us
     </StartupCommand>
 </JWM>
