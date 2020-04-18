@@ -22,8 +22,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
                       fonts-ipafont-gothic \
                       dbus-x11 \
                       fcitx-mozc \
+                      fcitx-imlist \
                       vim-gtk3 \
-                      libcurl4 \
                       epiphany-browser \
                       curl \
                       feh
@@ -62,14 +62,9 @@ RUN useradd -m \
 WORKDIR /home/${DOCKER_USER}
 
 # jwm(window manager), lxterminal(terminal), bashの設定
-COPY ./config/jwmrc ./.jwmrc
 COPY ./config/lxterminal.conf ./.config/lxterminal/lxterminal.conf
 COPY ./config/bashrc ./.bashrc
-COPY ./fcitx/config ./.config/fcitx/
-RUN echo '[Profile]\n \
-          IMName=mozc\n \
-          EnabledIMList=fcitx-keyboard-jp:True,mozc:True\n' \
-          > ./.config/fcitx/profile
+COPY ./config/jwmrc ./.jwmrc
 
 RUN chown -R ${DOCKER_USER} ./
 
